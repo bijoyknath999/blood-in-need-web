@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -14,6 +15,108 @@ class HomeController extends Controller
         return view('user.register');
     }
 
+
+    function facebooklogin(Request $request)
+    {
+        $checkUser = User::where('socialid',$request->uid)->first();
+
+    	if($checkUser){
+    		$checkUser->socialid = $request->uid;
+    		$checkUser->email = $request->email;
+    		$checkUser->phone = $request->phoneNumber;
+    		$checkUser->Save();
+    		return response()->json([
+    			"status" => "success"
+    		]);
+
+    	}else{
+    		$user = new User;
+    		$user->socialid = $request->uid;
+            if($request->email)
+            {
+                $user->email = $request->email;
+            }
+            else
+            {
+                $user->email = "";
+            }
+
+            if($request->phoneNumber)
+            {
+                $user->phone = $request->phoneNumber;
+            }
+            else
+            {
+                $user->phone = "";
+            }
+    		$user->usertype = "facebook";
+            $user->firstname = "";
+            $user->lastname = "";
+            $user->username = "";
+            $user->gender = "";
+            $user->bloodgroup = "";
+            $user->division = "";
+            $user->district = "";
+            $user->postcode = "0";
+            $user->verified = 0;
+    		$user->Save();
+    		return response()->json([
+    			"status" => "success"
+    		]);
+    	}
+
+    }
+
+    function googlelogin(Request $request)
+    {
+        $checkUser = User::where('socialid',$request->uid)->first();
+
+    	if($checkUser){
+    		$checkUser->socialid = $request->uid;
+    		$checkUser->email = $request->email;
+    		$checkUser->phone = $request->phoneNumber;
+    		$checkUser->Save();
+    		return response()->json([
+    			"status" => "success"
+    		]);
+
+    	}else{
+    		$user = new User;
+    		$user->socialid = $request->uid;
+            if($request->email)
+            {
+                $user->email = $request->email;
+            }
+            else
+            {
+                $user->email = "";
+            }
+
+            if($request->phoneNumber)
+            {
+                $user->phone = $request->phoneNumber;
+            }
+            else
+            {
+                $user->phone = "";
+            }
+    		$user->usertype = "google";
+            $user->firstname = "";
+            $user->lastname = "";
+            $user->username = "";
+            $user->gender = "";
+            $user->bloodgroup = "";
+            $user->division = "";
+            $user->district = "";
+            $user->postcode = "0";
+            $user->verified = 0;
+    		$user->Save();
+    		return response()->json([
+    			"status" => "success"
+    		]);
+    	}
+
+    }
 
     function saveUser(Request $request)
     {

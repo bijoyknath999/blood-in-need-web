@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE-edge">
 <meta name="viewport" content="width=device-width, intial-scale=1.0">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="baseURL" content="{{ url('/') }}">
+
 <title>Blood In Need</title>
 <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}"/>
 
@@ -84,11 +87,33 @@
             <p>There is a hope of life to someone in your blood donation.</p>
         <!--btn------->
             <button type="button" id="test" class="register-btn">Register Here</button>
+            <button type="button" id="facebookLogin" class="register-btn">Register Here</button>
+            <button type="button" id="googleLogin" class="register-btn">Register Here</button>
+
         </div>
         </div>
     </section>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
     <script src="{{asset('js/script.js')}}"></script>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-firestore.js"></script>
+
+    <script src="{{asset('js/firebase-conf.js')}}"></script>
+
+    <script src="{{asset('js/social.js')}}"></script>
+
+
+
 
 </body>
 </html>

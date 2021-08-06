@@ -18,6 +18,8 @@ class Users extends Migration
             $table->text('firstname');
             $table->text('lastname');
             $table->text('username');
+            $table->text('socialid');
+            $table->text('usertype');
             $table->text('phone');
             $table->text('bloodgroup');
             $table->text('gender');
@@ -25,7 +27,6 @@ class Users extends Migration
             $table->text('division');
             $table->integer('postcode');
             $table->text('email');
-            $table->text('password');
             $table->boolean('verified');
             $table->timestamps();
         });
