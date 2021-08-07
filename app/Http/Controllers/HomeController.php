@@ -18,104 +18,154 @@ class HomeController extends Controller
 
     function facebooklogin(Request $request)
     {
-        $checkUser = User::where('socialid',$request->uid)->first();
-
-    	if($checkUser){
-    		$checkUser->socialid = $request->uid;
-    		$checkUser->email = $request->email;
-    		$checkUser->phone = $request->phoneNumber;
-    		$checkUser->Save();
-    		return response()->json([
-    			"status" => "success"
-    		]);
-
-    	}else{
-    		$user = new User;
-    		$user->socialid = $request->uid;
-            if($request->email)
+        $checkUser = User::where('uid',$request->uid)->first();
+        $checkUserEmail = User::where('email',$request->email)->first();
+        
+        if($request->status="already")
+        {
+            if($request->proider="google")
             {
-                $user->email = $request->email;
+                return response()->json([
+                    "message" => "Use sign in with google"
+                ]);
             }
-            else
+            else if($request->proider="password")
             {
-                $user->email = "";
+                return response()->json([
+                    "message" => "Use sign in with email and password"
+                ]);
             }
-
-            if($request->phoneNumber)
-            {
-                $user->phone = $request->phoneNumber;
+        }
+        else
+        {
+            if($checkUser){
+                $checkUser->uid = $request->uid;
+                $checkUser->email = $this->nullcheck($request->email);
+                $checkUser->phone = $this->nullcheck($request->phone);
+                $checkUser->Save();
+                return response()->json([
+                    "status" => "success"
+                ]);
+    
+            }else{
+                if($checkUserEmail)
+                {}
+                else
+                {
+                    $user = new User;
+                    $user->uid = $request->uid;
+                    $user->email = $this->nullcheck($request->email);
+                    $user->phone = $this->nullcheck($request->phone);
+                    $user->usertype = "facebook";
+                    $user->firstname = "";
+                    $user->lastname = "";
+                    $user->username = "";
+                    $user->gender = "";
+                    $user->bloodgroup = "";
+                    $user->division = "";
+                    $user->district = "";
+                    $user->postcode = "0";
+                    $user->verified = false;
+                    $user->Save();
+                    return response()->json([
+                        "status" => "success"
+                    ]);
+                    }
             }
-            else
-            {
-                $user->phone = "";
-            }
-    		$user->usertype = "facebook";
-            $user->firstname = "";
-            $user->lastname = "";
-            $user->username = "";
-            $user->gender = "";
-            $user->bloodgroup = "";
-            $user->division = "";
-            $user->district = "";
-            $user->postcode = "0";
-            $user->verified = 0;
-    		$user->Save();
-    		return response()->json([
-    			"status" => "success"
-    		]);
-    	}
-
+        }
     }
 
     function googlelogin(Request $request)
     {
-        $checkUser = User::where('socialid',$request->uid)->first();
+        $checkUser = User::where('uid',$request->uid)->first();
+        $checkUserEmail = User::where('email',$request->email)->first();
+
 
     	if($checkUser){
-    		$checkUser->socialid = $request->uid;
-    		$checkUser->email = $request->email;
-    		$checkUser->phone = $request->phoneNumber;
+    		$checkUser->uid = $request->uid;
+            $checkUser->email = $this->nullcheck($request->email);
+            $checkUser->phone = $this->nullcheck($request->phone);
     		$checkUser->Save();
     		return response()->json([
     			"status" => "success"
     		]);
 
     	}else{
-    		$user = new User;
-    		$user->socialid = $request->uid;
-            if($request->email)
-            {
-                $user->email = $request->email;
+            if($checkUserEmail){}
+            else{
+                $user = new User;
+                $user->uid = $request->uid;
+                $user->email = $this->nullcheck($request->email);
+                $user->phone = $this->nullcheck($request->phone);
+                $user->usertype = "google";
+                $user->firstname = "";
+                $user->lastname = "";
+                $user->username = "";
+                $user->gender = "";
+                $user->bloodgroup = "";
+                $user->division = "";
+                $user->district = "";
+                $user->postcode = "0";
+                $user->verified = false;
+                $user->Save();
+                return response()->json([
+                    "status" => "success"
+                ]);
             }
-            else
-            {
-                $user->email = "";
-            }
+        }
 
-            if($request->phoneNumber)
-            {
-                $user->phone = $request->phoneNumber;
-            }
-            else
-            {
-                $user->phone = "";
-            }
-    		$user->usertype = "google";
-            $user->firstname = "";
-            $user->lastname = "";
-            $user->username = "";
-            $user->gender = "";
-            $user->bloodgroup = "";
-            $user->division = "";
-            $user->district = "";
-            $user->postcode = "0";
-            $user->verified = 0;
-    		$user->Save();
+    }
+
+    function passwordlogin(Request $request){
+        $checkUser = User::where('uid',$request->uid)->first();
+        $checkUserEmail = User::where('email',$request->email)->first();
+
+
+    	if($checkUser){
+    		$checkUser->uid = $request->uid;
+            $checkUser->email = $this->nullcheck($request->email);
+            $checkUser->phone = $this->nullcheck($request->phone);
+    		$checkUser->Save();
     		return response()->json([
     			"status" => "success"
     		]);
-    	}
 
+    	}else{
+            if($checkUserEmail){}
+            else{
+                $user = new User;
+                $user->uid = $request->uid;
+                $user->email = $this->nullcheck($request->email);
+                $user->phone = "";
+                $user->usertype = "password";
+                $user->firstname = "";
+                $user->lastname = "";
+                $user->username = "";
+                $user->gender = "";
+                $user->bloodgroup = "";
+                $user->division = "";
+                $user->district = "";
+                $user->postcode = "0";
+                $user->verified = $request->verified;
+                $user->Save();
+                return response()->json([
+                    "status" => "success"
+                ]);
+            }
+        }
+    }
+
+    function nullcheck($val)
+    {
+        if($val)
+        {
+            return $val;
+        }
+        else
+        {
+            $val = "";
+            return $val;
+        }
     }
 
     function saveUser(Request $request)
@@ -137,7 +187,7 @@ class HomeController extends Controller
         $user->division = "";
         $user->district = "";
         $user->postcode = "0";
-        $user->verified = 0;
+        $user->verified = false;
 
         $save = $user->Save();
         return $request->input();

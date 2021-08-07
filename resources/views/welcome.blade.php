@@ -32,31 +32,30 @@
             <div class="container" id="container">
                 <div class="form-container sign-up-container">
 
-                    <form action="/user/save" method="post">                        @csrf
+                    <form>
                     <h1>Create Account</h1>
                     <div class="social-container">
 
                     </div>
-                    <input type="email" name="email" placeholder="Email">
+                    <input id="emailsignup" type="email" name="email" placeholder="Email">
                     <div id="error1" class="alert alert-danger alert-dismissible fade show">@error('email'){{ $message }}@enderror</div>
-                    <input id="password" type="password" name="password" placeholder="Password">
+                    <input id="passwordsignup" type="password" name="password" placeholder="Password">
                     <div id="error2" class="alert alert-danger alert-dismissible fade show">@error('password'){{ $message }}@enderror</div>
-                    <input id="password_confirmation" type="password" name="password_confirmation" placeholder="Confirm Password">
-                    <button type="submit">SignUp</button>
+                    <input id="passwordconfirmation" type="password" name="password_confirmation" placeholder="Confirm Password">
+                    <button id="signupbtn" type="button">SignUp</button>
                     </form>
                 </div>
                 <div class="form-container sign-in-container">
-                    <form action="/user/check" method="POST">
-                        @csrf
+                    <form>
                         <h1>Sign In</h1>
                         <div class="social-container">
                         <a href="#" class="social"><i class="fa fa-google"></i></a>
                     </div>
-                    <input type="email" name="email" placeholder="Email">
-                    <input type="password" name="password" placeholder="Password">
+                    <input type="email" id="emailsignin" name="email" placeholder="Email">
+                    <input type="password" id="passwordsignin" name="password" placeholder="Password">
                     <a href="#">Forgot Your Password</a>
 
-                    <button type="submit">Sign In</button>
+                    <button id="signbtn" type="button">Sign In</button>
                     </form>
                 </div>
                 <div class="overlay-container">

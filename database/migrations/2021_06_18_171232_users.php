@@ -18,7 +18,7 @@ class Users extends Migration
             $table->text('firstname');
             $table->text('lastname');
             $table->text('username');
-            $table->text('socialid');
+            $table->text('uid');
             $table->text('usertype');
             $table->text('phone');
             $table->text('bloodgroup');

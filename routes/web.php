@@ -20,8 +20,9 @@ use App\Http\Controllers\HomeController;
 
 Route::post('/user/save', [HomeController::class, 'saveUser']);
 Route::post('/user/check', [HomeController::class, 'checklogin']);
-Route::post('/social/login', [HomeController::class,'facebooklogin']);
-Route::post('/social/login', [HomeController::class,'googlelogin']);
+Route::post('/social/facebook', [HomeController::class,'facebooklogin']);
+Route::post('/social/google', [HomeController::class,'googlelogin']);
+Route::post('/signup/send', [HomeController::class,'passwordlogin']);
 Route::post('/user/logout',[HomeController::class,'userlogout']);
 
 Route::get('/create-account',function(){
